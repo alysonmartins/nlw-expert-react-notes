@@ -23,13 +23,18 @@ export function NewNoteCard() {
   function handleSaveNote(event: FormEvent) {
     event.preventDefault()
     console.log(content)
-
-    toast.success('Nota criada com sucesso!')
+    if (content === '') {
+      toast.error('Campo de Nota Vazio')
+    }
+    else {
+      toast.success('Nota criada com sucesso!')
+    }
   }
 
-
   return (
-    <Dialog.Root>
+    // <Dialog.Root>
+    <Dialog.Root onOpenChange={(open) => !open && setShouldShowOnboarding(true)}>
+      {/* Agradecimentos a @lesada da comunidade do discord por esse script para resetar setShouldShowOnboarding quando fecha o modal */}
       <Dialog.Trigger className='rounded-md bg-slate-700 p-5 flex flex-col text-left gap-3 outline-none hover:ring-2 hover:ring-slate-600 
       focus-visible:ring-2 focus-visible: ring-lime-400'>
         <span className='text-sm font-medium text-slate-200'>
@@ -67,7 +72,7 @@ export function NewNoteCard() {
 
               {shouldShowOnboarding ? (<p className='text-sm leading-6 text-slate-400'>
 
-                Começe <button className='text-lime-400 font-medium hover:underline'>gravando uma nota</button> em áudio ou se preferir <button onClick={handleStartEditor} className='text-lime-400 font-medium hover:underline'>utilize apenas texto</button>.
+                Começe <button type='button' className='text-lime-400 font-medium hover:underline'>gravando uma nota</button> em áudio ou se preferir <button onClick={handleStartEditor} className='text-lime-400 font-medium hover:underline'>utilize apenas texto</button>.
 
               </p>
               ) : (
